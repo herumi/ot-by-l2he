@@ -18,6 +18,18 @@ void SendResponse(OutputStream& os, const std::string& in, const std::string& co
 	os.write(in.c_str(), in.size());
 }
 
+template<class T>
+struct VecT {
+	static const size_t maxFactor = 10;
+	const T* p;
+	size_t n;
+	VecT(const T*p, size_t n) : p(p), n(n) {}
+	T operator[](size_t i) const
+	{
+		return (i < n) ? (p[i] - '0') : i % maxFactor;
+	}
+};
+
 int main(int argc, char *argv[])
 	try
 {
@@ -31,8 +43,6 @@ int main(int argc, char *argv[])
 	}
 	const char *secStr = "673406c280f5475db8f7b9dec0fc662bedb4e6a536ef8d628e71e898b632911ba90e0ffe43fe224263f690b61692dca96b941846b375e58046f01974782fc509";
 	cybozu::Mmap piMap("./pi1m.txt");
-	const char *pi = piMap.get();
-	const size_t piN = piMap.size();
 	initOT();
 	SecretKey sec;
 	sec.setStr(secStr, mcl::IoSerializeHexStr);
@@ -50,12 +60,8 @@ int main(int argc, char *argv[])
 	}
 	ot.set(v);
 	CipherTextGT ct;
-	std::vector<uint8_t> tbl;
-	tbl.resize(piN);
-	for (size_t i = 0; i < tbl.size(); i++) {
-		tbl[i] = uint8_t(pi[i] - '0');
-	}
-	ot.calc(ct, tbl.data(), tbl.size());
+	VecT<char> tbl(piMap.get(), piMap.size());
+	ot.calc(ct, tbl);
 	CipherTextGTtoJson(v, ct);
 	std::string str = v.serialize();
 	if (doTest) {

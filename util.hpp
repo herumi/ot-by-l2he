@@ -115,15 +115,15 @@ struct OT {
 		fprintf(stderr, "\n");
 	}
 	template<class Vec>
-	void innerproduct(CipherTextG1& out, const C1Vec& cv, const Vec *v, size_t vn) const
+	void innerproduct(CipherTextG1& out, const C1Vec& cv, const Vec& tbl, size_t vn) const
 	{
 		assert(!cv.empty() && vn > 0);
 		out = cv[0];
-		CipherTextG1::mul(out, out, v[0]);
+		CipherTextG1::mul(out, out, tbl[0]);
 		CipherTextG1 t;
 		const size_t n = std::min(cv.size(), vn);
 		for (size_t i = 1; i < n; i++) {
-			CipherTextG1::mul(t, cv[i], v[i]);
+			CipherTextG1::mul(t, cv[i], tbl[i]);
 			CipherTextG1::add(out, out, t);
 		}
 	}
@@ -144,46 +144,38 @@ struct OT {
 		}
 	}
 	template<class Vec>
-	void innerproductPrecomputed(CipherTextG1& out, const C1Vec& c1vTbl, int maxFactor, const Vec *v, size_t n) const
+	void innerproductPrecomputed(CipherTextG1& out, const C1Vec& c1vTbl, size_t M, int maxFactor, const Vec& tbl, size_t begin) const
 	{
-		assert(!c1vTbl.empty() && n > 0);
-		out = c1vTbl[v[0]];
-		for (size_t i = 1; i < n; i++) {
-			assert(0 <= v[i] && v[i] < maxFactor);
-			if (v[i]) {
-				CipherTextG1::add(out, out, c1vTbl[i * maxFactor + v[i]]);
-			}
+		assert(!c1vTbl.empty());
+		out = c1vTbl[tbl[begin]];
+		for (size_t i = 1; i < M; i++) {
+			uint8_t v = tbl[begin + i];
+			assert(0 <= v && v < maxFactor);
+//			if (v >= maxFactor) throw cybozu::Exception("bad v") << v;
+			CipherTextG1::add(out, out, c1vTbl[i * maxFactor + v]);
 		}
 	}
 	template<class Vec>
-	void calc(CipherTextGT& ct, const Vec* v, size_t vn) const
+	void calc(CipherTextGT& ct, const Vec& tbl) const
 	{
-		if (c1v.empty() || c2v.empty() || vn == 0 || vn < c1v.size()) {
-			throw cybozu::Exception("too short vn") << c1v.size() << vn;
+		if (c1v.empty() || c2v.empty()) {
+			throw cybozu::Exception("too short vn") << c1v.size();
 		}
 		C1Vec c1vTbl;
-		const int maxFactor = 10;
-		precomputeSmallFactorCipherTextG1(c1vTbl, c1v, maxFactor);
+		precomputeSmallFactorCipherTextG1(c1vTbl, c1v, Vec::maxFactor);
 		const size_t M = c1v.size();
-		const size_t N = std::min((vn + M - 1) / M, c2v.size());
+		const size_t N = c2v.size();
 		std::vector<CipherTextGT> ctv(N);
 
 #pragma omp parallel for
-		for (size_t i = 0; i < N - 1; i++) {
+		for (size_t i = 0; i < N; i++) {
 			CipherTextG1 c1;
-			innerproductPrecomputed(c1, c1vTbl, maxFactor, &v[i * M], M);
-			CipherTextGT::mulML(ctv[i], c1, c2v[i]);
-		}
-		const size_t remain = std::min(vn - (N - 1) * M, M);
-		{
-			size_t i = N - 1;
-			CipherTextG1 c1;
-			innerproductPrecomputed(c1, c1vTbl, maxFactor, &v[i * M], remain);
+			innerproductPrecomputed(c1, c1vTbl, M, Vec::maxFactor, tbl, i * M);
 			CipherTextGT::mulML(ctv[i], c1, c2v[i]);
 		}
 
 		ct = ctv[0];
-		for (size_t i = 1; i < ctv.size(); i++) {
+		for (size_t i = 1; i < N; i++) {
 			CipherTextGT::add(ct, ct, ctv[i]);
 		}
 		CipherTextGT::finalExp(ct, ct);
