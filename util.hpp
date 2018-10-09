@@ -172,19 +172,20 @@ struct OT {
 		for (size_t i = 0; i < N - 1; i++) {
 			CipherTextG1 c1;
 			innerproductPrecomputed(c1, c1vTbl, maxFactor, &v[i * M], M);
-			CipherTextGT::mul(ctv[i], c1, c2v[i]);
+			CipherTextGT::mulML(ctv[i], c1, c2v[i]);
 		}
 		const size_t remain = std::min(vn - (N - 1) * M, M);
 		{
 			size_t i = N - 1;
 			CipherTextG1 c1;
 			innerproductPrecomputed(c1, c1vTbl, maxFactor, &v[i * M], remain);
-			CipherTextGT::mul(ctv[i], c1, c2v[i]);
+			CipherTextGT::mulML(ctv[i], c1, c2v[i]);
 		}
 
 		ct = ctv[0];
 		for (size_t i = 1; i < ctv.size(); i++) {
 			CipherTextGT::add(ct, ct, ctv[i]);
 		}
+		CipherTextGT::finalExp(ct, ct);
 	}
 };
