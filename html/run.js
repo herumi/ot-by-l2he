@@ -1,5 +1,6 @@
 const getValue = name => { return document.getElementsByName(name)[0].value }
 const setText = (name, val) => { document.getElementsByName(name)[0].innerText = val }
+const URL = '../cgi-bin/ot.cgi'
 
 const loadScript = (url, callback) => {
   const script = document.createElement('script')
@@ -58,7 +59,7 @@ const onClickOT = () => {
 }
 
 const sendOT = (data) => {
-  fetch('https://herumi.com:50002/cgi-bin/ot.cgi', {
+  fetch(URL, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json; charset=utf-8",

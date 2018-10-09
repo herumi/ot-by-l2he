@@ -4,6 +4,7 @@ const assert = require('assert')
 const fetch = require('node-fetch')
 const ot = require('./ot.js')
 const { performance } = require('perf_hooks')
+const URL = ''
 
 function bench (label, count, func) {
   const start = performance.now()
@@ -31,7 +32,7 @@ she.init()
       bench('enc', 2, () => { ot.enc(ppub, 0, N, M) })
       const json = ot.enc(ppub, pos, N, M)
       const begin = performance.now()
-      fetch('https://herumi.com:50002/cgi-bin/ot.cgi', {
+      fetch(URL, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json; charset=utf-8",
