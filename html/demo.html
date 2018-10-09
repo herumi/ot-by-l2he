@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>oblivious transfer demo</title>
+	<link rel="stylesheet" type="text/css">
+	<script src="she.js"></script>
+	<script src="ot.js"></script>
+	<script src="run.js"></script>
+</head>
+<body>
+<h1>Oblivious Transfer demo</h1>
+<h2>Get the pos-th digit of &#960; (0 &lt;= pos &lt; 1000000)</h2>
+<div>
+  pos : <input type="text" name="pos" value="0">
+</div>
+<div>
+  ret : <span name="ret"></span>
+</div>
+<div>
+  status : <span name="status">initializing...</span>
+</div>
+<button type="text" id="testOT" onclick="onClickOT()">test OT</button>
+<div>
+  N = <input type="text" name="N" value="1000000">,
+  M = <input type="text" name="M" value="0">
+</div>
+</body>
+</html>
