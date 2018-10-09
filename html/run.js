@@ -31,7 +31,7 @@ const getPassedTime = () => {
 }
 
 loadScript('./she_c.js', () => {
-  she.init(0).then(() => {
+  she.init(she.BN254, 128).then(() => {
     sec = new she.SecretKey()
     sec.setByCSPRNG()
 //    sec.deserializeHexStr("673406c280f5475db8f7b9dec0fc662bedb4e6a536ef8d628e71e898b632911ba90e0ffe43fe224263f690b61692dca96b941846b375e58046f01974782fc509");
@@ -54,7 +54,9 @@ const onClickOT = () => {
   prevTime = Date.now()
   const v = ot.enc(ppub, pos, N, M)
   setText('status', 'sending...')
-  console.log(`sending...${getPassedTime()}`)
+  const time = getPassedTime()
+  setText('encTime', time)
+  console.log(`sending...${time}`)
   sendOT(v)
 }
 
@@ -67,7 +69,9 @@ const sendOT = (data) => {
     body: JSON.stringify(data),
   }).then(res => res.json())
     .then(json => {
-      console.log(`received ${getPassedTime()}`)
+      const time = getPassedTime()
+      setText('recvTime', time)
+      console.log(`received ${time}`)
       setText('status', 'received')
       const v = ot.dec(she, sec, json)
       console.log(`dec=${v}`)
