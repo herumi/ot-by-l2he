@@ -6,12 +6,11 @@ template<class OutputStream>
 void SendResponse(OutputStream& os, const std::string& in, const std::string& contentType)
 {
 	std::ostringstream oss;
-	oss << "HTTP/1.0 200 OK\r\n"
-	   << "Content-Length: " << in.size() << "\r\n"
-	   << "Connection: close\r\n"
-	   << "Access-Control-Allow-Origin: *\r\n"
-	   << "X-Content-Type-Options: nosniff\r\n"
-	   << "Content-Type: " << contentType << "\r\n";
+	oss << "Content-Length: " << in.size() << "\r\n"
+		<< "Connection: close\r\n"
+		<< "Access-Control-Allow-Origin: *\r\n"
+		<< "X-Content-Type-Options: nosniff\r\n"
+		<< "Content-Type: " << contentType << "\r\n";
 	oss << "\r\n";
 	const std::string& header = oss.str();
 	os.write(header.c_str(), header.size());
