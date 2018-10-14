@@ -7,9 +7,9 @@ http://opensource.org/licenses/BSD-3-Clause
 
 # Dependencies
 
-[mcl](https://github.com/herumi/mcl)
-[she-wasm](https://github.com/herumi/she-wasm)
-[picojson](https://github.com/kazuho/picojson) by kazuho
+* [mcl](https://github.com/herumi/mcl)
+* [she-wasm](https://github.com/herumi/she-wasm)
+* [picojson](https://github.com/kazuho/picojson) by kazuho
 
 # Author
 
