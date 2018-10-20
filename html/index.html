@@ -2,36 +2,35 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>oblivious transfer demo</title>
-	<link rel="stylesheet" type="text/css">
+	<title>紛失通信デモ</title>
+	<link rel="stylesheet" href="style.css">
 	<script src="she.js"></script>
 	<script src="ot.js"></script>
 	<script src="run.js"></script>
 </head>
 <body>
-<h1>Oblivious Transfer demo</h1>
-<h2>Get the pos-th digit of &#960; (0 &lt;= pos &lt; 1000000)</h2>
+<h1>L2準同型によるOT</h1>
+<h2>0以上100万未満の桁数を入力</h2>
 <div>
-  pos : <input type="text" name="pos" value="0">
+  <span>桁 : </span><input type="text" name="pos" value="0">
+</div>
+<button type="text" id="testOT" onclick="onClickOT()">問い合わせる
+</button>
+<div>
+  <span>円周率のその桁は</span><span name="ret">0</span><span>です</span>
 </div>
 <div>
-  ret : <span name="ret"></span>
+  <span>status : </span><span name="status">initializing...</span>
 </div>
 <div>
-  status : <span name="status">initializing...</span>
-</div>
-<button type="text" id="testOT" onclick="onClickOT()">test OT</button>
-<div>
-  N = <input type="text" name="N" value="1000000">,
-  M = <input type="text" name="M" value="0">
+  <span>N = </span><input type="text" name="N" value="1000000"><br>
+  <span>M = </span><input type="text" name="M" value="0">
 </div>
 <div>
-  enc: <span name="encTime">0</span>msec<br>
-  send/OT/recv: <span name="recvTime">0</span>msec
+  <span>enc: </span><span name="encTime">0</span><span>msec</span><br>
+  <span>send/OT/recv: </span><span name="recvTime">0</span><span>msec</span>
 </div>
 <h2>links</h2>
-<ul>
-  <li><a href="https://github.com/herumi/ot-by-l2he">GitHub</a></li>
-</ul>
+  <a href="https://github.com/herumi/ot-by-l2he">GitHub</a>
 </body>
 </html>
