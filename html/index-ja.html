@@ -1,23 +1,23 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>oblivious transfer demo</title>
+	<title>紛失通信デモ</title>
 	<link rel="stylesheet" href="style.css">
 	<script src="she.js"></script>
 	<script src="ot.js"></script>
 	<script src="run.js"></script>
 </head>
 <body>
-<h1>Oblivious Transfer demo by L2-HE</h1>
-<h2>Input the pos-th digit of &#960; (0 &lt;= pos &lt; 1000000)</h2>
+<h1>L2準同型によるOT</h1>
+<h2>0以上100万未満の桁数を入力</h2>
 <div>
-  <span>pos : </span><input type="text" name="pos" value="0">
+  <span>桁 : </span><input type="text" name="pos" value="0">
 </div>
-<button type="text" id="testOT" onclick="onClickOT()">query
+<button type="text" id="testOT" onclick="onClickOT()">問い合わせる
 </button>
 <div>
-  <span>The result is </span> <span name="ret">0</span><span> .</span>
+  <span>円周率のその桁は</span><span name="ret">0</span><span>です</span>
 </div>
 <div>
   <span>status : </span><span name="status">initializing...</span>
