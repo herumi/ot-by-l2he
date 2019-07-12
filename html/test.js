@@ -4,7 +4,7 @@ const assert = require('assert')
 const fetch = require('node-fetch')
 const ot = require('./ot.js')
 const { performance } = require('perf_hooks')
-const URL = 'https://herumi.com:50002/cgi-bin/ot.cgi'
+const URL = ''
 
 function bench (label, count, func) {
   const start = performance.now()
