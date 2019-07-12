@@ -1,5 +1,18 @@
-const getValue = name => { return document.getElementsByName(name)[0].value }
-const setText = (name, val) => { document.getElementsByName(name)[0].innerText = val }
+function getValue (name) {
+  const e = document.getElementsByName(name)
+console.log(`getValue ${e} ${e.length}`)
+  return e.length > 0 ? e[0].value : 0
+}
+function getText (name) {
+  const e = document.getElementsByName(name)
+console.log(`getText ${e} ${e.length}`)
+  return e.length > 0 ? e[0].innerText : ''
+}
+function setText (name, val) {
+  const e = document.getElementsByName(name)
+console.log(`setText ${e} ${e.length}`)
+  if (e.length > 0) e[0].innerText = val
+}
 const URL = '../cgi-bin/ot.cgi'
 
 const loadScript = (url, callback) => {

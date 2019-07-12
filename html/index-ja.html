@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 	<meta charset="UTF-8">
 	<title>紛失通信デモ</title>
-	<link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="design.css">
 	<script src="she.js"></script>
 	<script src="ot.js"></script>
 	<script src="run.js"></script>
 </head>
+
 <body>
-<h1>L2準同型によるOT</h1>
-<h2>0以上100万未満の桁数を入力</h2>
-<div>
-  <span>桁 : </span><input type="text" name="pos" value="0">
-</div>
-<button type="text" id="testOT" onclick="onClickOT()">問い合わせる
-</button>
-<div>
-  <span>円周率のその桁は</span><span name="ret">0</span><span>です</span>
-</div>
-<div>
-  <span>status : </span><span name="status">initializing...</span>
-</div>
-<div>
-  <span>N = </span><input type="text" name="N" value="1000000"><br>
-  <span>M = </span><input type="text" name="M" value="0">
-</div>
-<div>
-  <span>enc: </span><span name="encTime">0</span><span>msec</span><br>
-  <span>send/OT/recv: </span><span name="recvTime">0</span><span>msec</span>
-</div>
-<h2>links</h2>
-  <a href="https://github.com/herumi/ot-by-l2he">GitHub</a>
+  <div class="designportal-advanced">
+    <h1 class="cross-h1">L2準同型による紛失通信</h1>
+    <h2 class="cross-h2">0以上100万未満の桁数を入力</h2>
+    <p class="cross-status">status : <span class="cross-status-span" name="status">initializing...</span></p>
+    <div class="cross-header">
+      <h3>桁 : </h3>
+      <input class="cross-add-xy" type="text" name="pos" value="0">
+      <button class="cross-button" type="text" id="testOT" onclick="onClickOT()">問い合わせる
+    </div>
+    </button>
+    <div class="cross-header">
+      <h3>円周率のその桁は</h3><h3 name="ret">0</h3><h3>です</h3>
+    </div>
+    <div class="cross-header">
+      <h3>N = </h3><input type="text" name="N" value="1000000">
+    </div>
+    <div class="cross-header">
+      <h3>M = </h3><input type="text" name="M" value="0">
+    </div>
+    <div class="cross-header">
+      <h3>enc: </h3><h3 name="encTime">0</h3><h3>msec</h3>
+    </div>
+    <div class="cross-header">
+      <h3>send/OT/recv: </h3><h3 name="recvTime">0</h3><h3>msec</h3>
+    </div>
+    <h2>links</h2>
+      <a href="https://github.com/herumi/ot-by-l2he">GitHub</a>
+  </div>
 </body>
+
 </html>
